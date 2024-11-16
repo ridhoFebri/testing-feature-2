@@ -1,0 +1,57 @@
+php 7
+
+1. tesseract for php
+	- harus menginstall tesseract ocr di system aplikasi
+	- tidak cukup hanya menggunakan library
+	- belum mendukung Bahasa Indonesia
+	- docs : https://github.com/thiagoalessio/tesseract-ocr-for-php
+	- library tidak akurat jika text tidak jelas dan ukuran text kecil
+
+2. OCR.Space
+	- kurang akurat
+	- doc : https://ocr.space/OCRAPI
+
+3. PHP OCR Class
+	- library ini tidak ada
+
+PYTHON
+3. EasyOCR
+	- 80% akurat
+	- gambar sedikit jelas tidak masalah
+	- doc 1 : https://github.com/JaidedAI/EasyOCR
+	- doc 2 : https://www.jaided.ai/easyocr/documentation/
+
+4. Microsoft Azure Cognitive Services (OCR)
+	- buat aku masih belum terdaftar untuk mendapatkan api mereka
+
+JS
+5. tesseract ocr js or node
+	- 80% akurat
+	- gambar sedikit jelas tidak masalah
+
+6. jsOCR
+	- tidak akurat bahkan pada text yang jelas
+	- doc yang sudah digunakan : https://github.com/tareku/JsOCR
+
+# OCR berbayar
+	- document ai google
+		- https://chatgpt.com/share/6736fef4-575c-800b-b2de-9f72220c2e9e
+	- google vision
+		- link information : https://chatgpt.com/share/6736fe68-0558-800b-8871-5285261e9a0e
+		- some tutorial : https://codelabs.developers.google.com/codelabs/cloud-vision-api-python#1
+		- doc 1 : https://cloud.google.com/functions/docs/tutorials/ocr
+		- ocr-testing@my-ocr-project-441808.iam.gserviceaccount.com
+
+# improve image
+1. PHP GD bawaan php
+	- bisa memodifikasi gambar
+
+2. imagic
+	- extention tidak tersedia
+
+3. OpenCV python
+	- warna gambar kurang hitam putih
+
+
+# how to install chocolate on my system
+	https://chatgpt.com/share/673559e4-fcd0-800b-9eee-9ee72836fc31
