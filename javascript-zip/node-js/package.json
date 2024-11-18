@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "formidable": "^3.5.2",
     "fs-extra": "^11.2.0",
     "minizip-asm.js": "^1.0.10"
   }

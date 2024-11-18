@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zip Files with Password</title>
+</head>
+<body>
+    <h1>Zip Files with Password</h1>
+
+    <!-- Form untuk meng-upload file dan password -->
+    <form id="zipForm" enctype="multipart/form-data">
+        <label for="files">Choose Files to Zip:</label>
+        <input type="file" id="files" name="files" multiple><br><br>
+        
+        <label for="password">Enter Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Process Zip</button>
+    </form>
+
+    <script>
+        // Menangani pengiriman form
+        document.getElementById('zipForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const files = document.getElementById('files').files;
+            const password = document.getElementById('password').value;
+            
+            // Menyiapkan FormData
+            const formData = new FormData();
+            for (let file of files) {
+                formData.append('files', file);
+            }
+            formData.append('password', password);
+
+            // Mengirim data ke server
+            try {
+                const response = await fetch('/zip', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert('Files have been zipped successfully!');
+                } else {
+                    alert('Error zipping the files.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while processing the zip.');
+            }
+        });
+    </script>
+</body>
+</html>
