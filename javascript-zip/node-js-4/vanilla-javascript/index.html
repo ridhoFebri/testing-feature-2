@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <h1>test 8</h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buat Excel menggunakan xlsx-populate</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx-populate/1.21.0/xlsx-populate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+</head>
+<body>
+    <h2>Buat File Excel</h2>
+    <button onclick="generateExcel()">Buat Excel</button>
+
+    <script>
+        function generateExcel() {
+            // Membuat workbook kosong
+            XlsxPopulate.fromBlankAsync().then(workbook => {
+                // Mendapatkan sheet pertama
+                const sheet = workbook.sheet(0);
+
+                // Menambahkan data ke dalam sheet
+                sheet.cell("A1").value("Hello");
+                sheet.cell("B1").value("World");
+
+                // Mengonversi workbook ke buffer
+                workbook.toBuffer().then(buffer => {
+                    // Membuat Blob dari buffer
+                    const blob = new Blob([buffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+
+                    // Mengunduh file Excel menggunakan FileSaver.js
+                    saveAs(blob, "example.xlsx");
+                }).catch(error => {
+                    console.error("Kesalahan saat mengonversi workbook ke buffer:", error);
+                });
+            }).catch(error => {
+                console.error("Kesalahan saat membuat workbook:", error);
+            });
+        }
+    </script>
+</body>
+</html>
