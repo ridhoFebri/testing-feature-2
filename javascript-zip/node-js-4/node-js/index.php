@@ -1,39 +1,38 @@
-<?php
-// Data yang dikirim untuk Excel
-$filename = "out.xlsx";
-$password = "febrian";
-$data = [
-    "A1" => "This is neat!",
-    "B1" => "Another cell"
-];
+<?php 
+public function upload_excel()
+{
+    $this->load->helper('url');
+    $this->load->helper('form');
 
-// Konversi data menjadi JSON string
-$dataJson = json_encode($data);
+    // Pastikan file sudah di-upload
+    if (!empty($_FILES['excelFile']['name'])) {
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'xlsx|xls';
+        $this->load->library('upload', $config);
 
-// Debugging: tampilkan perintah yang akan dijalankan
-echo "Command: node app.js " . escapeshellarg($filename) . " " . escapeshellarg($password) . " " . escapeshellarg($dataJson) . "<br>";
+        if (!$this->upload->do_upload('excelFile')) {
+            // Jika gagal upload
+            echo $this->upload->display_errors();
+        } else {
+            $data = $this->upload->data();
+            $filePath = $data['full_path'];
 
-// Jalankan script Node.js
-$command = "node app.js " . escapeshellarg($filename) . " " . escapeshellarg($password) . " " . escapeshellarg($dataJson);
-exec($command, $output, $returnCode);
+            // Menjalankan perintah untuk memulai server Node.js menggunakan exec
+            $command = 'node /path/to/your/project/server.js';
+            $output = null;
+            $resultCode = null;
 
-// Debugging: tampilkan output dan return code
-echo "Output: " . implode("<br>", $output) . "<br>";
-echo "Return Code: " . $returnCode . "<br>";
+            // Eksekusi perintah untuk menjalankan Node.js server
+            exec($command, $output, $resultCode);
 
-// Periksa apakah script berjalan sukses
-if ($returnCode === 0) {
-    echo "File berhasil dibuat: $filename";
-
-    // Kirim file ke browser untuk diunduh
-    header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-    header("Content-Disposition: attachment; filename=\"$filename\"");
-    readfile($filename);
-
-    // Hapus file setelah diunduh
-    unlink($filename);
-} else {
-    echo "Error dalam pembuatan file Excel.";
-    print_r($output); // Debugging output
+            // Cek apakah perintah berhasil dijalankan
+            if ($resultCode === 0) {
+                // Server Node.js berhasil dijalankan
+                echo "Node.js server berhasil dijalankan!";
+            } else {
+                // Gagal menjalankan server
+                echo "Terjadi kesalahan saat menjalankan Node.js server.";
+            }
+        }
+    }
 }
-?>
